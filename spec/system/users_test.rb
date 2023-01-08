@@ -34,41 +34,68 @@ RSpec.describe 'Static content', type: :system do
   let(:query_number1) { 10 }
   let(:query_sequence1) { '2 3 5 6 7 8 10 11 12 13' }
 
-  scenario 'when there is sequence in given data' do
-    visit root_path # переходим на страницы ввода
-
-    fill_in :query_number, with: query_number # заполняем поле с name="query_number"
-    fill_in :query_sequence, with: query_sequence # заполняем поле с name="query_sequence"
-
-    find('#calculate-btn').click # нажимаем на кнопку с id="calculate_btn"
-
-    # ожидаем найти в контенере вывода правильное содержимое
-    expect(find('body')).to have_text(result[:sequences].to_s)
-    expect(find('body')).to have_text(result[:maxsequence].to_s)
-    expect(find('body')).to have_text(result[:sequences_number].to_s)
+  scenario 'visiting the index' do
+    visit users_path
+    expect(find('h1')).to have_text("Users")
   end
 
-#   scenario 'when there is NO sequence in given data' do
-#     visit root_path # переходим на страницы ввода
+  scenario 'creating and destroying user' do
+    visit users_path # переходим на страницы ввода
+    click_on "New user"
 
-#     fill_in :query_number, with: query_number1 # заполняем поле с name="query_number"
-#     fill_in :query_sequence, with: query_sequence1 # заполняем поле с name="query_sequence"
+    fill_in "user[username]", with: 'test_user' # заполняем поле с name="username"
+    fill_in "user[password]", with: '123' # заполняем поле с name="password"
+    fill_in "user[password_confirmation]", with: '123' # заполняем поле с name="password_confirmation"
 
-#     find('#calculate-btn').click # нажимаем на кнопку с id="calculate_btn"
+    click_on "Create User"
 
-#     # ожидаем найти в контенере вывода правильное содержимое
-#     expect(find('body')).to have_text('последовательностей не найдено')
-#   end
+    expect(find('body')).to have_text('User was successfully created.')
 
-#   # сценарий неправильного ввода формы
-#   scenario 'when user do not fill any values in form and click submit' do
-#     visit root_path # переходим на страницу ввода
+    click_on "Destroy this user"
 
-#     find('#calculate-btn').click # нажимаем на кнопку с id="calculate_btn"
+    expect(find('body')).to have_text('User was successfully destroyed.')
+  end
 
-#     # ожидаем найти в контенере вывода содержимое с выводом всех ошибок модели
-#     Main.new.errors.messages.each do |message|
-#       expect(find('body')).to have_text(message)
-#     end
-#   end
+  # сценарий неправильного ввода формы
+  scenario 'creating user and calculating' do
+    visit users_path # переходим на страницы ввода
+    click_on "New user"
+
+    fill_in "user[username]", with: 'test_user' # заполняем поле с name="username"
+    fill_in "user[password]", with: '123' # заполняем поле с name="password"
+    fill_in "user[password_confirmation]", with: '123' # заполняем поле с name="password_confirmation"
+
+    click_on "Create User"
+
+    expect(find('body')).to have_text('User was successfully created.')
+
+    visit calcs_path
+
+    click_on "New calc"
+
+    fill_in :query_number, with: query_number1 # заполняем поле с name="query_number"
+    fill_in :query_sequence, with: query_sequence1 # заполняем поле с name="query_sequence"
+
+    click_on "Добавить запись:"
+
+    expect(find('body')).to have_text('Calc was successfully created.')
+
+    click_on "Destroy this calc"
+
+    expect(find('body')).to have_text('Calc was successfully destroyed.')
+
+    click_on 'test_user'
+
+    click_on "Destroy this user"
+
+    expect(find('body')).to have_text('User was successfully destroyed.')
+  end
+
+  scenario 'when checking that there no access to calculating without login' do
+    visit calcs_path # переходим на страницу с calcs
+    expect(find('body')).to have_text('Требуется логин')
+
+    visit new_calc_path # переходим на страницу создания нового вычисления
+    expect(find('body')).to have_text('Требуется логин')
+  end
 end
