@@ -16,7 +16,7 @@ class Calc < ApplicationRecord
   validates :query_sequence, uniqueness: true
   validates :sequences, :maxsequence, :sequences_number, presence: true
 
-  validates :query_number, format: { with: /\A[\d]+\z/, message: 'должно быть натуральным числом' }
+  validates :query_number, format: { with: /\A\d+\z/, message: 'должно быть натуральным числом' }
 
   @ptrn_list_and_error_messages = [
     { ptrn: /\A[\s\d]+\z/, err_msg: 'состоит только из натуральных чисел, разделённых пробелами' }
@@ -38,12 +38,12 @@ class Calc < ApplicationRecord
         after_mod = is_square?(after)
         (!before_mod && after_mod) || (before_mod && !after_mod)
       end
-  
+
       sequences = enum.to_a.select { |array| array.any? { |element| is_square?(element) } }
 
       create query_number: number, query_sequence: params[:query_sequence], sequences: JSON.generate(sequences),
-      maxsequence: JSON.generate(sequences.max_by(&:size)), sequences_number: sequences.size,
-      user_id: user_id
+             maxsequence: JSON.generate(sequences.max_by(&:size)), sequences_number: sequences.size,
+             user_id:
     end
 
     def evaluate(params, user_id)
@@ -54,16 +54,16 @@ class Calc < ApplicationRecord
         after_mod = is_square?(after)
         (!before_mod && after_mod) || (before_mod && !after_mod)
       end
-  
+
       sequences = enum.to_a.select { |array| array.any? { |element| is_square?(element) } }
 
       { query_number: number, query_sequence: params[:query_sequence], sequences: JSON.generate(sequences),
-      maxsequence: JSON.generate(sequences.max_by(&:size)), sequences_number: sequences.size,
-      user_id: user_id }
+        maxsequence: JSON.generate(sequences.max_by(&:size)), sequences_number: sequences.size,
+        user_id: }
     end
 
     private
-  
+
     def is_square?(x)
       (Math.sqrt(x) % 1).zero?
     end

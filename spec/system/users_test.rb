@@ -36,22 +36,22 @@ RSpec.describe 'Static content', type: :system do
 
   scenario 'visiting the index' do
     visit users_path
-    expect(find('h1')).to have_text("Users")
+    expect(find('h1')).to have_text('Users')
   end
 
   scenario 'creating and destroying user' do
     visit users_path # переходим на страницы ввода
-    click_on "New user"
+    click_on 'New user'
 
-    fill_in "user[username]", with: 'test_user' # заполняем поле с name="username"
-    fill_in "user[password]", with: '123' # заполняем поле с name="password"
-    fill_in "user[password_confirmation]", with: '123' # заполняем поле с name="password_confirmation"
+    fill_in 'user[username]', with: 'test_user' # заполняем поле с name="username"
+    fill_in 'user[password]', with: '123' # заполняем поле с name="password"
+    fill_in 'user[password_confirmation]', with: '123' # заполняем поле с name="password_confirmation"
 
-    click_on "Create User"
+    click_on 'Create User'
 
     expect(find('body')).to have_text('User was successfully created.')
 
-    click_on "Destroy this user"
+    click_on 'Destroy this user'
 
     expect(find('body')).to have_text('User was successfully destroyed.')
   end
@@ -59,34 +59,34 @@ RSpec.describe 'Static content', type: :system do
   # сценарий неправильного ввода формы
   scenario 'creating user and calculating' do
     visit users_path # переходим на страницы ввода
-    click_on "New user"
+    click_on 'New user'
 
-    fill_in "user[username]", with: 'test_user' # заполняем поле с name="username"
-    fill_in "user[password]", with: '123' # заполняем поле с name="password"
-    fill_in "user[password_confirmation]", with: '123' # заполняем поле с name="password_confirmation"
+    fill_in 'user[username]', with: 'test_user' # заполняем поле с name="username"
+    fill_in 'user[password]', with: '123' # заполняем поле с name="password"
+    fill_in 'user[password_confirmation]', with: '123' # заполняем поле с name="password_confirmation"
 
-    click_on "Create User"
+    click_on 'Create User'
 
     expect(find('body')).to have_text('User was successfully created.')
 
     visit calcs_path
 
-    click_on "New calc"
+    click_on 'New calc'
 
     fill_in :query_number, with: query_number1 # заполняем поле с name="query_number"
     fill_in :query_sequence, with: query_sequence1 # заполняем поле с name="query_sequence"
 
-    click_on "Добавить запись:"
+    click_on 'Добавить запись:'
 
     expect(find('body')).to have_text('Calc was successfully created.')
 
-    click_on "Destroy this calc"
+    click_on 'Destroy this calc'
 
     expect(find('body')).to have_text('Calc was successfully destroyed.')
 
     click_on 'test_user'
 
-    click_on "Destroy this user"
+    click_on 'Destroy this user'
 
     expect(find('body')).to have_text('User was successfully destroyed.')
   end
