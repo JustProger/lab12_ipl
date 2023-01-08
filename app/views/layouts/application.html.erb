@@ -5,15 +5,38 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <% if signed_in? %>
-      <p><%= link_to "Выйти", session_logout_path %></p>
-    <% end %>
+    <nav class="navbar navbar-expand navbar-light bg-light sticky-top">
+      <div class="container-fluid">
+        <div class="row w-100">
+          <div class="col-9">
+            Lab12Ipl
+          </div>  
+          <div class="col">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col">
+                  <% if signed_in? %>
+                    <%= link_to "Выйти", session_logout_path %>
+                  <% end %>
+                </div>
+                <div class="col">
+                  <% if signed_in? %>
+                    User: <strong><%= link_to "#{current_user.username}", current_user %></strong>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>
