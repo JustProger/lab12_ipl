@@ -1,0 +1,34 @@
+<div id="<%= dom_id calc %>">
+
+  <p>
+    <strong>Input number of elemets of sequence:</strong>
+    <%= calc.query_number %>
+  </p>
+
+  <p>
+    <strong>Input sequence</strong>
+    <%= calc.query_sequence %>
+  </p>
+
+  <h3>Результат:</h3>
+
+  <% if JSON.parse(calc.sequences).empty? %>
+  <h3>последовательностей не найдено</h3>
+  <% else %>
+    <table>
+      <tr>
+        <td><strong>последовательности</strong></td>
+        <td><%= calc.sequences %></td>
+      </tr>
+      <tr>
+        <td><strong>максимальная последовательность</strong></td>
+        <td><%= calc.maxsequence %></td>
+      </tr>
+      <tr>
+        <td><strong>количество последовательностей</strong></td>
+        <td><%= calc.sequences_number %></td>
+      </tr>
+    </table>
+  <% end %>
+
+</div>

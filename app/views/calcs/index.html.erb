@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Calcs</h1>
+
+<div id="calcs">
+  <% @calcs.each do |calc| %>
+    <%= render calc %>
+    <p>
+      <%= link_to "Show this calc", calc %>
+    </p>
+  <% end %>
+</div>
+
+<p><%= link_to "New calc", new_calc_path %></p>
+<p><%= link_to "Выйти", session_logout_path %></p>

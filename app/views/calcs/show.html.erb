@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @calc %>
+
+<div>
+  <%= link_to "Edit this calc", edit_calc_path(@calc) %> |
+  <%= link_to "Back to calcs", calcs_path %>
+
+  <%= button_to "Destroy this calc", @calc, method: :delete %>
+</div>
