@@ -37,11 +37,17 @@ class CalcsController < ApplicationController
   # PATCH/PUT /calcs/1 or /calcs/1.json
   def update
     respond_to do |format|
-      if @calc.update(calc_params)
+      if @calc.update(Calc.evaluate(params, current_user.id))
         format.html { redirect_to calc_url(@calc), notice: 'Calc was successfully updated.' }
         format.json { render :show, status: :ok, location: @calc }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html do
+          flash[:alert] ||= []
+          @calc.errors.each do |error|
+            flash[:alert] << [-1, error.full_message, nil, error.details[:value]]
+          end
+          redirect_to edit_calc_path(@calc.id)
+        end
         format.json { render json: @calc.errors, status: :unprocessable_entity }
       end
     end

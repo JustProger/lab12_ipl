@@ -46,6 +46,22 @@ class Calc < ApplicationRecord
       user_id: user_id
     end
 
+    def evaluate(params, user_id)
+      number = params[:query_number].to_i
+      array = params[:query_sequence].split.map(&:to_i)
+      enum = array.slice_when do |before, after|
+        before_mod = is_square?(before)
+        after_mod = is_square?(after)
+        (!before_mod && after_mod) || (before_mod && !after_mod)
+      end
+  
+      sequences = enum.to_a.select { |array| array.any? { |element| is_square?(element) } }
+
+      { query_number: number, query_sequence: params[:query_sequence], sequences: JSON.generate(sequences),
+      maxsequence: JSON.generate(sequences.max_by(&:size)), sequences_number: sequences.size,
+      user_id: user_id }
+    end
+
     private
   
     def is_square?(x)

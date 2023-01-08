@@ -3,7 +3,7 @@
 <%= render @calc %>
 
 <div>
-  <%= link_to "Edit this calc", edit_calc_path(@calc) %> |
+  <%= link_to "Edit this calc", edit_calc_path(@calc.id) %> |
   <%= link_to "Back to calcs", calcs_path %>
 
   <%= button_to "Destroy this calc", @calc, method: :delete %>

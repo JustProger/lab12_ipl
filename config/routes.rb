@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root 'calcs#index'
+  root 'session#login'
   resources :calcs
-  get 'session/login'
   post 'session/create'
   get 'session/logout'
   resources :users

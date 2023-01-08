@@ -10,15 +10,15 @@ class SessionController < ApplicationController
 
     if user&.authenticate(params[:password])
       sign_in user
-      redirect_to root_path
+      redirect_to calcs_path  # calcs#index
     else
-      flash.now[:danger] = 'Неверный логин или пароль'
-      redirect_to session_login_path, notice: 'Неверный логин или пароль'
+      # flash.now[:danger] = 'Неверный логин или пароль'
+      redirect_to root_path, notice: 'Неверный логин или пароль'
     end
   end
 
   def logout
     sign_out
-    redirect_to session_login_path
+    redirect_to root_path
   end
 end
