@@ -11,6 +11,9 @@
   </head>
 
   <body>
+    <% if signed_in? %>
+      <p><%= link_to "Выйти", session_logout_path %></p>
+    <% end %>
     <%= yield %>
   </body>
 </html>
