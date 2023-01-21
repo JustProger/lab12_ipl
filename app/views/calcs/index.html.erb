@@ -4,10 +4,16 @@
 
 <div id="calcs">
   <% @calcs.each do |calc| %>
-    <%= render calc %>
-    <p>
-      <%= link_to "Show this calc", calc %>
-    </p>
+    <div>
+      <%= render calc %>
+      <p>
+        <%= link_to "Show this calc", calc %>
+      </p>
+      <p>
+        Запись пользователя
+        <%= link_to "#{User.find(calc.user_id).username}", User.find(calc.user_id) %>
+      </p>
+    </div>
   <% end %>
 </div>
 

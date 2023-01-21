@@ -28,7 +28,14 @@ class CalcsController < ApplicationController
         format.html { redirect_to calc_url(@calc), notice: 'Calc was successfully created.' }
         format.json { render :show, status: :created, location: @calc }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        # format.html { render :new, status: :unprocessable_entity }
+        format.html do
+          flash[:alert] ||= []
+          @calc.errors.each do |error|
+            flash[:alert] << [-1, error.full_message, nil, error.details[:value]]
+          end
+          redirect_to new_calc_path
+        end
         format.json { render json: @calc.errors, status: :unprocessable_entity }
       end
     end

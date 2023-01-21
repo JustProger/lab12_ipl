@@ -7,3 +7,25 @@
 <div>
   <%= link_to "Back to calcs", calcs_path %>
 </div>
+
+<% flash.each do |type, msg| %>
+  <% case type %>
+  <% when "alert" then %>
+    <% msg.each do |msg1| %>
+      <% if msg1[0] %>
+        <h3 style="color: red">Ошибка!</h3>
+      <% end %>
+      <% if msg1[1] %>
+        <h3>Пояснение: <%= msg1[1] %></h3>
+      <% end %>
+      <% if msg1[2] %>
+        <h3>Возможно этот символ вызвал ошибку: <%= msg1[2] %></h3>
+      <% end %>
+      <% if msg1[3] %>
+        <h3>Входные данные, вызвавшие ошибку: <%= msg1[3] %></h3>
+      <% end %>
+    <% end %>
+  <% else %>
+    <h3><%= msg %></h3>
+  <% end %>  
+<% end %>

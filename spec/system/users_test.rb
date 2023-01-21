@@ -56,7 +56,6 @@ RSpec.describe 'Static content', type: :system do
     expect(find('body')).to have_text('User was successfully destroyed.')
   end
 
-  # сценарий неправильного ввода формы
   scenario 'creating user and calculating' do
     visit users_path # переходим на страницы ввода
     click_on 'New user'
